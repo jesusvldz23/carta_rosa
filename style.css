@@ -63,6 +63,11 @@ button {
   animation: aparecer 1s ease forwards, zoomLento 8s ease-in-out infinite alternate;
 }
 
+.foto-collage,
+.foto-principal {
+  transition: opacity 0.5s ease;
+}
+
 /* Fotos */
 .foto-collage {
   position: absolute;

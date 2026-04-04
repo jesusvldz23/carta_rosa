@@ -23,7 +23,6 @@ function iniciarMusica() {
 function mostrarCollage() {
   const collage = document.getElementById("collage");
 
-  // 🔥 FOTO PRINCIPAL (la más importante)
   const fotoPrincipal = "./foto1.jpeg";
 
   const fotos = [
@@ -33,54 +32,65 @@ function mostrarCollage() {
     "./foto14.jpeg","./foto15.jpeg"
   ];
 
-  // FOTO PRINCIPAL
-  const principal = document.createElement("img");
-  principal.src = fotoPrincipal;
-  principal.classList.add("foto-principal");
+  function generarCollage() {
+    collage.innerHTML = ""; // limpiar todo
 
-  principal.style.left = "50%";
-  principal.style.top = "50%";
-  principal.style.transform = "translate(-50%, -50%)";
+    //FOTO PRINCIPAL
+    const principal = document.createElement("img");
+    principal.src = fotoPrincipal;
+    principal.classList.add("foto-principal");
 
-  collage.appendChild(principal);
+    principal.style.left = "50%";
+    principal.style.top = "50%";
+    principal.style.transform = "translate(-50%, -50%)";
 
-  // POSICIONES DE LAS DEMÁS (tipo círculo alrededor)
-  const posiciones = [];
+    collage.appendChild(principal);
 
-  fotos.forEach((foto, index) => {
-    setTimeout(() => {
-      const img = document.createElement("img");
-      img.src = foto;
-      img.classList.add("foto-collage");
+    const posiciones = [];
 
-      let left, top, intento = 0;
+    fotos.forEach((foto, index) => {
+      setTimeout(() => {
+        const img = document.createElement("img");
+        img.src = foto;
+        img.classList.add("foto-collage");
 
-      do {
-        left = Math.random() * 85;
-        top = Math.random() * 85;
-        intento++;
-      } while (
-        // evitar centro (para no tapar la principal)
-        (Math.abs(left - 50) < 20 && Math.abs(top - 50) < 20) ||
+        let left, top, intento = 0;
 
-        // evitar encimarse mucho
-        posiciones.some(pos =>
-          Math.abs(pos.left - left) < 18 &&
-          Math.abs(pos.top - top) < 18
-        ) && intento < 50
-      );
+        do {
+          left = Math.random() * 90;
+          top = Math.random() * 90;
+          intento++;
+        } while (
+          // evitar centro
+          (Math.abs(left - 50) < 22 && Math.abs(top - 50) < 22) ||
 
-      posiciones.push({ left, top });
+          // evitar encimarse mucho
+          posiciones.some(pos =>
+            Math.abs(pos.left - left) < 18 &&
+            Math.abs(pos.top - top) < 18
+          ) && intento < 60
+        );
 
-      img.style.left = left + "%";
-      img.style.top = top + "%";
+        posiciones.push({ left, top });
 
-      img.style.transform =
-        "translate(-50%, -50%) rotate(" + (Math.random() * 25 - 12) + "deg)";
+        img.style.left = left + "%";
+        img.style.top = top + "%";
 
-      collage.appendChild(img);
-    }, index * 200);
-  });
+        img.style.transform =
+          "translate(-50%, -50%) rotate(" + (Math.random() * 20 - 10) + "deg)";
+
+        collage.appendChild(img);
+      }, index * 200);
+    });
+  }
+
+  // 🔁 Primera ejecución
+  generarCollage();
+
+  // 🔄 Repetir cada 8 segundos
+  setInterval(() => {
+    generarCollage();
+  }, 8000);
 }
 // Corazones
 function crearCorazones() {
