@@ -23,11 +23,28 @@ function iniciarMusica() {
 function mostrarCollage() {
   const collage = document.getElementById("collage");
 
+  // 🔥 FOTO PRINCIPAL (la más importante)
+  const fotoPrincipal = "./foto1.jpeg";
+
   const fotos = [
-    "./foto1.jpeg","./foto2.jpeg","./foto3.jpeg","./foto4.jpeg","./foto5.jpeg",
-    "./foto6.jpeg","./foto7.jpeg","./foto8.jpeg","./foto9.jpeg","./foto10.jpeg"
+    "./foto2.jpeg","./foto3.jpeg","./foto4.jpeg","./foto5.jpeg",
+    "./foto6.jpeg","./foto7.jpeg","./foto8.jpeg","./foto9.jpeg",
+    "./foto10.jpeg","./foto11.jpeg","./foto12.jpeg","./foto13.jpeg",
+    "./foto14.jpeg","./foto15.jpeg"
   ];
 
+  // FOTO PRINCIPAL
+  const principal = document.createElement("img");
+  principal.src = fotoPrincipal;
+  principal.classList.add("foto-principal");
+
+  principal.style.left = "50%";
+  principal.style.top = "50%";
+  principal.style.transform = "translate(-50%, -50%)";
+
+  collage.appendChild(principal);
+
+  // POSICIONES DE LAS DEMÁS (tipo círculo alrededor)
   const posiciones = [];
 
   fotos.forEach((foto, index) => {
@@ -38,15 +55,18 @@ function mostrarCollage() {
 
       let left, top, intento = 0;
 
-      // Evitar que se encimen mucho
       do {
-        left = Math.random() * 80;
-        top = Math.random() * 80;
+        left = Math.random() * 85;
+        top = Math.random() * 85;
         intento++;
       } while (
+        // evitar centro (para no tapar la principal)
+        (Math.abs(left - 50) < 20 && Math.abs(top - 50) < 20) ||
+
+        // evitar encimarse mucho
         posiciones.some(pos =>
-          Math.abs(pos.left - left) < 20 &&
-          Math.abs(pos.top - top) < 20
+          Math.abs(pos.left - left) < 18 &&
+          Math.abs(pos.top - top) < 18
         ) && intento < 50
       );
 
@@ -59,7 +79,7 @@ function mostrarCollage() {
         "translate(-50%, -50%) rotate(" + (Math.random() * 25 - 12) + "deg)";
 
       collage.appendChild(img);
-    }, index * 250);
+    }, index * 200);
   });
 }
 // Corazones
