@@ -28,36 +28,45 @@ function mostrarCollage() {
     "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg","foto10.jpeg"
   ];
 
-  const posiciones = [];
+  const columnas = 4;
+  const filas = 3;
 
-  fotos.forEach((foto, index) => {
-    setTimeout(() => {
-      const img = document.createElement("img");
-      img.src = foto;
-      img.classList.add("foto-collage");
+  const anchoCelda = 100 / columnas;
+  const altoCelda = 100 / filas;
 
-      let left, top, intento = 0;
+  let index = 0;
 
-      do {
-        left = Math.random() * 75;
-        top = Math.random() * 75;
-        intento++;
-      } while (
-        posiciones.some(pos =>
-          Math.abs(pos.left - left) < 18 &&
-          Math.abs(pos.top - top) < 18
-        ) && intento < 50
-      );
+  for (let fila = 0; fila < filas; fila++) {
+    for (let col = 0; col < columnas; col++) {
 
-      posiciones.push({ left, top });
+      if (index >= fotos.length) return;
 
-      img.style.left = left + "%";
-      img.style.top = top + "%";
-      img.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
+      setTimeout(() => {
+        const img = document.createElement("img");
+        img.src = fotos[index];
+        img.classList.add("foto-collage");
 
-      collage.appendChild(img);
-    }, index * 250);
-  });
+        // Posición centrada
+        let left = col * anchoCelda + anchoCelda / 2;
+        let top = fila * altoCelda + altoCelda / 2;
+
+        // Pequeña variación para look natural
+        left += (Math.random() * 6 - 3);
+        top += (Math.random() * 6 - 3);
+
+        img.style.left = left + "%";
+        img.style.top = top + "%";
+
+        // Centrar imagen en ese punto
+        img.style.transform =
+          "translate(-50%, -50%) rotate(" + (Math.random() * 20 - 10) + "deg)";
+
+        collage.appendChild(img);
+      }, index * 250);
+
+      index++;
+    }
+  }
 }
 
 // Corazones
