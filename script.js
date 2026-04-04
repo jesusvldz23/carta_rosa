@@ -29,44 +29,43 @@ function mostrarCollage() {
   ];
 
   const columnas = 4;
-  const filas = 3;
+  const anchoColumna = 100 / columnas;
 
-  const anchoCelda = 100 / columnas;
-  const altoCelda = 100 / filas;
+  // alturas acumuladas por columna
+  let alturas = [0, 0, 0, 0];
 
-  let index = 0;
+  fotos.forEach((foto, index) => {
+    setTimeout(() => {
+      const img = document.createElement("img");
+      img.src = foto;
+      img.classList.add("foto-collage");
 
-  for (let fila = 0; fila < filas; fila++) {
-    for (let col = 0; col < columnas; col++) {
+      // elegir columna más baja
+      let col = alturas.indexOf(Math.min(...alturas));
 
-      if (index >= fotos.length) return;
+      // tamaños variados
+      const tamaños = [140, 160, 180, 200];
+      let size = tamaños[Math.floor(Math.random() * tamaños.length)];
 
-      setTimeout(() => {
-        const img = document.createElement("img");
-        img.src = fotos[index];
-        img.classList.add("foto-collage");
+      // calcular posición
+      let left = col * anchoColumna + anchoColumna / 2;
+      let top = alturas[col] + size / 2;
 
-        // Posición centrada
-        let left = col * anchoCelda + anchoCelda / 2;
-        let top = fila * altoCelda + altoCelda / 2;
+      // guardar nueva altura
+      alturas[col] += size + 10;
 
-        // Pequeña variación para look natural
-        left += (Math.random() * 6 - 3);
-        top += (Math.random() * 6 - 3);
+      img.style.width = size + "px";
+      img.style.height = size + "px";
 
-        img.style.left = left + "%";
-        img.style.top = top + "%";
+      img.style.left = left + "%";
+      img.style.top = top + "px";
 
-        // Centrar imagen en ese punto
-        img.style.transform =
-          "translate(-50%, -50%) rotate(" + (Math.random() * 20 - 10) + "deg)";
+      img.style.transform =
+        "translate(-50%, -50%) rotate(" + (Math.random() * 20 - 10) + "deg)";
 
-        collage.appendChild(img);
-      }, index * 250);
-
-      index++;
-    }
-  }
+      collage.appendChild(img);
+    }, index * 200);
+  });
 }
 
 // Corazones
