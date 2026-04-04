@@ -1,56 +1,48 @@
 body {
   margin: 0;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
   overflow: hidden;
+  font-family: Arial, sans-serif;
   background: linear-gradient(135deg, #ff758c, #ff7eb3);
 }
 
 /* Tarjeta */
 .card {
-  background: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,0.8);
   padding: 30px;
   border-radius: 25px;
   text-align: center;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.3);
   width: 85%;
   max-width: 320px;
+  backdrop-filter: blur(10px);
+  transition: all 1s ease;
   z-index: 10;
 }
 
-/* Logo */
-.logo {
-  font-size: 45px;
+/* Animación cuando desaparece */
+.card.oculta {
+  transform: translate(-50%, -50%) scale(0.5);
+  opacity: 0;
 }
 
 /* Texto */
 #mensaje {
-  font-size: 16px;
   margin-top: 10px;
 }
 
 /* Botón */
 button {
   margin-top: 20px;
-  padding: 14px;
+  padding: 12px;
   width: 100%;
   border: none;
   border-radius: 15px;
   background: #ff4b5c;
   color: white;
-  font-size: 16px;
-}
-
-/* Sorpresa */
-.oculto {
-  display: none;
-  margin-top: 20px;
-  font-weight: bold;
-  color: #ff4b5c;
-  font-size: 18px;
 }
 
 /* Collage */
@@ -60,28 +52,49 @@ button {
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 20;
   pointer-events: none;
 }
 
 /* Fotos */
 .foto-collage {
   position: absolute;
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 15px;
   opacity: 0;
-  animation: aparecer 0.8s ease forwards;
+  animation: aparecer 1s ease forwards;
 }
 
-/* Animación */
+/* Animación fotos */
 @keyframes aparecer {
   from {
     opacity: 0;
-    transform: scale(0.5);
+    transform: scale(0.5) translateY(-50px);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: scale(1) translateY(0);
   }
+}
+
+/* Texto final */
+#finalText {
+  position: fixed;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 40px;
+  color: white;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.5);
+  transition: all 1.5s ease;
+  z-index: 30;
+}
+
+/* Cuando aparece */
+#finalText.mostrar {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
 }

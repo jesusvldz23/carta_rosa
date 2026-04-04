@@ -1,5 +1,4 @@
-// Texto animado
-const texto = "Rosa, eres la mejor novia del mundo ❤️";
+const texto = "Eres la mejor novia del mundo ❤️";
 let i = 0;
 
 function escribirTexto() {
@@ -10,7 +9,6 @@ function escribirTexto() {
   }
 }
 
-// Música
 let musicaIniciada = false;
 
 function iniciarMusica() {
@@ -21,7 +19,6 @@ function iniciarMusica() {
   }
 }
 
-// Collage con 10 fotos
 function mostrarCollage() {
   const collage = document.getElementById("collage");
 
@@ -39,28 +36,31 @@ function mostrarCollage() {
   ];
 
   fotos.forEach((foto, index) => {
-    const img = document.createElement("img");
-    img.src = foto;
-    img.classList.add("foto-collage");
+    setTimeout(() => {
+      const img = document.createElement("img");
+      img.src = foto;
+      img.classList.add("foto-collage");
 
-    img.style.left = Math.random() * 80 + "%";
-    img.style.top = Math.random() * 80 + "%";
-    img.style.transform = "rotate(" + (Math.random() * 40 - 20) + "deg)";
+      img.style.left = Math.random() * 80 + "%";
+      img.style.top = Math.random() * 80 + "%";
+      img.style.transform = "rotate(" + (Math.random() * 40 - 20) + "deg)";
 
-    img.style.animationDelay = (index * 0.2) + "s";
-
-    collage.appendChild(img);
+      collage.appendChild(img);
+    }, index * 300);
   });
 }
 
-// Abrir carta
 function abrirCarta() {
-  document.getElementById("sorpresa").style.display = "block";
-  mostrarCollage();
+  document.getElementById("card").classList.add("oculta");
+
   iniciarMusica();
+  mostrarCollage();
+
+  setTimeout(() => {
+    document.getElementById("finalText").classList.add("mostrar");
+  }, 4000);
 }
 
-// Iniciar animación
 window.onload = () => {
   document.getElementById("mensaje").innerHTML = "";
   escribirTexto();
