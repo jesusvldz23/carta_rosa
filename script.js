@@ -24,23 +24,11 @@ function mostrarCollage() {
   const collage = document.getElementById("collage");
 
   const fotos = [
-  "./foto1.jpeg",
-  "./foto2.jpeg",
-  "./foto3.jpeg",
-  "./foto4.jpeg",
-  "./foto5.jpeg",
-  "./foto6.jpeg",
-  "./foto7.jpeg",
-  "./foto8.jpeg",
-  "./foto9.jpeg",
-  "./foto10.jpeg"
-];
+    "./foto1.jpeg","./foto2.jpeg","./foto3.jpeg","./foto4.jpeg","./foto5.jpeg",
+    "./foto6.jpeg","./foto7.jpeg","./foto8.jpeg","./foto9.jpeg","./foto10.jpeg"
+  ];
 
-  const columnas = 4;
-  const anchoColumna = 100 / columnas;
-
-  // alturas acumuladas por columna
-  let alturas = [0, 0, 0, 0];
+  const posiciones = [];
 
   fotos.forEach((foto, index) => {
     setTimeout(() => {
@@ -48,34 +36,32 @@ function mostrarCollage() {
       img.src = foto;
       img.classList.add("foto-collage");
 
-      // elegir columna más baja
-      let col = alturas.indexOf(Math.min(...alturas));
+      let left, top, intento = 0;
 
-      // tamaños variados
-      const tamaños = [140, 160, 180, 200];
-      let size = tamaños[Math.floor(Math.random() * tamaños.length)];
+      // Evitar que se encimen mucho
+      do {
+        left = Math.random() * 80;
+        top = Math.random() * 80;
+        intento++;
+      } while (
+        posiciones.some(pos =>
+          Math.abs(pos.left - left) < 20 &&
+          Math.abs(pos.top - top) < 20
+        ) && intento < 50
+      );
 
-      // calcular posición
-      let left = col * anchoColumna + anchoColumna / 2;
-      let top = alturas[col] + size / 2;
-
-      // guardar nueva altura
-      alturas[col] += size + 10;
-
-      img.style.width = size + "px";
-      img.style.height = size + "px";
+      posiciones.push({ left, top });
 
       img.style.left = left + "%";
-      img.style.top = top + "px";
+      img.style.top = top + "%";
 
       img.style.transform =
-        "translate(-50%, -50%) rotate(" + (Math.random() * 20 - 10) + "deg)";
+        "translate(-50%, -50%) rotate(" + (Math.random() * 25 - 12) + "deg)";
 
       collage.appendChild(img);
-    }, index * 200);
+    }, index * 250);
   });
 }
-
 // Corazones
 function crearCorazones() {
   setInterval(() => {
