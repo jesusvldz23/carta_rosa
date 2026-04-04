@@ -19,21 +19,16 @@ function iniciarMusica() {
   }
 }
 
+// Collage bien distribuido
 function mostrarCollage() {
   const collage = document.getElementById("collage");
 
   const fotos = [
-    "foto1.jpeg",
-    "foto2.jpeg",
-    "foto3.jpeg",
-    "foto4.jpeg",
-    "foto5.jpeg",
-    "foto6.jpeg",
-    "foto7.jpeg",
-    "foto8.jpeg",
-    "foto9.jpeg",
-    "foto10.jpeg"
+    "foto1.jpeg","foto2.jpeg","foto3.jpeg","foto4.jpeg","foto5.jpeg",
+    "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg","foto10.jpeg"
   ];
+
+  const posiciones = [];
 
   fotos.forEach((foto, index) => {
     setTimeout(() => {
@@ -41,13 +36,46 @@ function mostrarCollage() {
       img.src = foto;
       img.classList.add("foto-collage");
 
-      img.style.left = Math.random() * 80 + "%";
-      img.style.top = Math.random() * 80 + "%";
-      img.style.transform = "rotate(" + (Math.random() * 40 - 20) + "deg)";
+      let left, top, intento = 0;
+
+      do {
+        left = Math.random() * 75;
+        top = Math.random() * 75;
+        intento++;
+      } while (
+        posiciones.some(pos =>
+          Math.abs(pos.left - left) < 18 &&
+          Math.abs(pos.top - top) < 18
+        ) && intento < 50
+      );
+
+      posiciones.push({ left, top });
+
+      img.style.left = left + "%";
+      img.style.top = top + "%";
+      img.style.transform = "rotate(" + (Math.random() * 30 - 15) + "deg)";
 
       collage.appendChild(img);
-    }, index * 300);
+    }, index * 250);
   });
+}
+
+// Corazones
+function crearCorazones() {
+  setInterval(() => {
+    const corazon = document.createElement("div");
+    corazon.innerHTML = "❤️";
+    corazon.classList.add("corazon");
+
+    corazon.style.left = Math.random() * 100 + "%";
+    corazon.style.fontSize = (Math.random() * 20 + 15) + "px";
+
+    document.body.appendChild(corazon);
+
+    setTimeout(() => {
+      corazon.remove();
+    }, 6000);
+  }, 300);
 }
 
 function abrirCarta() {
@@ -55,6 +83,7 @@ function abrirCarta() {
 
   iniciarMusica();
   mostrarCollage();
+  crearCorazones();
 
   setTimeout(() => {
     document.getElementById("finalText").classList.add("mostrar");

@@ -23,18 +23,11 @@ body {
   z-index: 10;
 }
 
-/* Animación cuando desaparece */
 .card.oculta {
   transform: translate(-50%, -50%) scale(0.5);
   opacity: 0;
 }
 
-/* Texto */
-#mensaje {
-  margin-top: 10px;
-}
-
-/* Botón */
 button {
   margin-top: 20px;
   padding: 12px;
@@ -59,15 +52,15 @@ button {
 /* Fotos */
 .foto-collage {
   position: absolute;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 20px;
   opacity: 0;
-  animation: aparecer 1s ease forwards;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  animation: aparecer 1s ease forwards, zoomLento 8s ease-in-out infinite alternate;
 }
 
-/* Animación fotos */
 @keyframes aparecer {
   from {
     opacity: 0;
@@ -79,13 +72,23 @@ button {
   }
 }
 
+/* Zoom lento */
+@keyframes zoomLento {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
 /* Texto final */
 #finalText {
   position: fixed;
   top: 50%;
   width: 100%;
   text-align: center;
-  font-size: 40px;
+  font-size: 38px;
   color: white;
   opacity: 0;
   transform: translateY(-50%) scale(0.5);
@@ -93,8 +96,43 @@ button {
   z-index: 30;
 }
 
-/* Cuando aparece */
 #finalText.mostrar {
   opacity: 1;
   transform: translateY(-50%) scale(1);
+}
+
+/* detrás del texto */
+#finalText::before {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 120px;
+  background: rgba(255, 75, 92, 0.3);
+  border-radius: 30px;
+  filter: blur(20px);
+  z-index: -1;
+}
+
+/* Corazones */
+.corazon {
+  position: fixed;
+  bottom: -20px;
+  font-size: 20px;
+  opacity: 0.7;
+  animation: flotar 6s linear infinite;
+  z-index: 5;
+}
+
+@keyframes flotar {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100vh) scale(1.5);
+    opacity: 0;
+  }
 }
