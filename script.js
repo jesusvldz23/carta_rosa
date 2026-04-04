@@ -24,9 +24,17 @@ function mostrarCollage() {
   const collage = document.getElementById("collage");
 
   const fotos = [
-    "foto1.jpeg","foto2.jpeg","foto3.jpeg","foto4.jpeg","foto5.jpeg",
-    "foto6.jpeg","foto7.jpeg","foto8.jpeg","foto9.jpeg","foto10.jpeg"
-  ];
+  "./foto1.jpeg",
+  "./foto2.jpeg",
+  "./foto3.jpeg",
+  "./foto4.jpeg",
+  "./foto5.jpeg",
+  "./foto6.jpeg",
+  "./foto7.jpeg",
+  "./foto8.jpeg",
+  "./foto9.jpeg",
+  "./foto10.jpeg"
+];
 
   const columnas = 4;
   const anchoColumna = 100 / columnas;
