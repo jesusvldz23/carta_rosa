@@ -121,8 +121,35 @@ function abrirCarta() {
     document.getElementById("finalText").classList.add("mostrar");
   }, 4000);
 }
+function crearEstrellas() {
+  for (let i = 0; i < 60; i++) {
+    const estrella = document.createElement("div");
+    estrella.classList.add("estrella");
 
+    estrella.style.left = Math.random() * 100 + "%";
+    estrella.style.top = Math.random() * 100 + "%";
+
+    estrella.style.animationDuration = (Math.random() * 3 + 2) + "s";
+
+    document.body.appendChild(estrella);
+  }
+}
+function actualizarContador() {
+  const inicio = new Date("2023-02-02"); 
+
+  const ahora = new Date();
+  const diferencia = ahora - inicio;
+
+  const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+
+  document.getElementById("contador").innerHTML =
+    "Llevamos " + dias + " días juntos ";
+}
+ 
 window.onload = () => {
   document.getElementById("mensaje").innerHTML = "";
   escribirTexto();
+  crearEstrellas();
+  actualizarContador();
 };
+
